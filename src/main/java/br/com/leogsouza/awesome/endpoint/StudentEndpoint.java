@@ -1,6 +1,7 @@
 package br.com.leogsouza.awesome.endpoint;
 
 import br.com.leogsouza.awesome.error.CustomErrorType;
+import br.com.leogsouza.awesome.error.ResourceNotFoundException;
 import br.com.leogsouza.awesome.model.Student;
 import br.com.leogsouza.awesome.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,14 @@ public class StudentEndpoint {
 
     @GetMapping
     public ResponseEntity<?> listAll() {
-
         return new ResponseEntity<>(studentDAO.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path= "/{id}")
     public ResponseEntity<?> listStudentById(@PathVariable("id") Long id) {
+        verifyIfStudentsExists(id);
         Student student = studentDAO.findById(id)
                 .orElse(null);
-        if (student == null) {
-            return new ResponseEntity<>(new CustomErrorType("Student not found"), HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
@@ -49,6 +46,7 @@ public class StudentEndpoint {
 
     @DeleteMapping(path="/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        verifyIfStudentsExists(id);
         studentDAO.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,8 +54,15 @@ public class StudentEndpoint {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Student student) {
+        verifyIfStudentsExists(student.getId());
         studentDAO.save(student);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private void verifyIfStudentsExists(Long id) {
+        if (!studentDAO.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("Student not found for ID: "+ id);
+        }
     }
 
 }

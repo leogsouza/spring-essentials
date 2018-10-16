@@ -1,36 +1,6 @@
 package br.com.leogsouza.awesome.error;
 
-public class ResourceNotFoundDetails {
-
-    private String title;
-    private int status;
-    private String details;
-    private Long timestamp;
-    private String developerMessage;
-
-    public ResourceNotFoundDetails() {
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public String getDeveloperMessage() {
-        return developerMessage;
-    }
-
+public class ResourceNotFoundDetails extends ErrorDetail {
 
     public static final class Builder {
         private String title;
@@ -73,11 +43,11 @@ public class ResourceNotFoundDetails {
 
         public ResourceNotFoundDetails build() {
             ResourceNotFoundDetails resourceNotFoundDetails = new ResourceNotFoundDetails();
-            resourceNotFoundDetails.title = this.title;
-            resourceNotFoundDetails.timestamp = this.timestamp;
-            resourceNotFoundDetails.developerMessage = this.developerMessage;
-            resourceNotFoundDetails.details = this.details;
-            resourceNotFoundDetails.status = this.status;
+            resourceNotFoundDetails.setTitle(title); 
+            resourceNotFoundDetails.setTimestamp(timestamp); 
+            resourceNotFoundDetails.setDeveloperMessage(developerMessage); 
+            resourceNotFoundDetails.setDetails(details); 
+            resourceNotFoundDetails.setStatus(status); 
             return resourceNotFoundDetails;
         }
     }

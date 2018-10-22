@@ -5,6 +5,7 @@ import br.com.leogsouza.awesome.error.ResourceNotFoundException;
 import br.com.leogsouza.awesome.model.Student;
 import br.com.leogsouza.awesome.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +25,8 @@ public class StudentEndpoint {
     }
 
     @GetMapping
-    public ResponseEntity<?> listAll() {
-        return new ResponseEntity<>(studentDAO.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> listAll(Pageable pageable) {
+        return new ResponseEntity<>(studentDAO.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(path= "/{id}")

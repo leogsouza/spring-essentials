@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PageableResponse<T> extends PageImpl<T> {
+    private boolean last;
+    private boolean first;
+    private int totalPages;
 
     public PageableResponse(@JsonProperty("content")List<T> content,
                             @JsonProperty("number") int page,
@@ -20,5 +23,32 @@ public class PageableResponse<T> extends PageImpl<T> {
 
     public PageableResponse() {
         super(new ArrayList<>());
+    }
+
+    @Override
+    public boolean isLast() {
+        return last;
+    }
+
+    public void setLast(boolean last) {
+        this.last = last;
+    }
+
+    @Override
+    public boolean isFirst() {
+        return first;
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
+    }
+
+    @Override
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
 }

@@ -1,5 +1,6 @@
 package br.com.leogsouza.awesome.javaclient;
 
+import br.com.leogsouza.awesome.model.PageableResponse;
 import br.com.leogsouza.awesome.model.Student;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,9 +21,9 @@ public class JavaSpringClientTest {
         System.out.println(student);
         Student[] students = restTemplate.getForObject("/", Student[].class);
         System.out.println(Arrays.toString(students));
-        ResponseEntity<List<Student>> exchange = restTemplate.exchange("/", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Student>>() {
+        ResponseEntity<PageableResponse<Student>> exchange = restTemplate.exchange("/", HttpMethod.GET, null,
+                new ParameterizedTypeReference<PageableResponse<Student>>() {
                 });
-        System.out.println(exchange.getBody());
+        System.out.println(exchange);
     }
 }

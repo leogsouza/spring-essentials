@@ -48,7 +48,7 @@ public class StudentEndpoint {
     @PostMapping
     @Transactional
     public ResponseEntity<?> save(@Valid @RequestBody Student student) {
-
+        student.setName("");
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
 

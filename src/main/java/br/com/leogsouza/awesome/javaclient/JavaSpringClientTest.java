@@ -4,8 +4,7 @@ import br.com.leogsouza.awesome.model.PageableResponse;
 import br.com.leogsouza.awesome.model.Student;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 public class JavaSpringClientTest {
@@ -26,5 +25,18 @@ public class JavaSpringClientTest {
                 new ParameterizedTypeReference<PageableResponse<Student>>() {
                 });
         System.out.println(exchange);
+
+        Student studentPost = new Student();
+        studentPost.setName("Ash Dolphin");
+        studentPost.setEmail("ashdp@asp.edu");
+        ResponseEntity<Student> exchangePost = restTemplate.exchange("/",
+                HttpMethod.POST, new HttpEntity<>(studentPost, createJSONHeader()), Student.class);
+        System.out.println(exchangePost);
+    }
+
+    private static HttpHeaders createJSONHeader() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
     }
 }

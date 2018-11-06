@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PageableResponse<T> extends PageImpl<T> {
-
     private boolean last;
     private boolean first;
     private int totalPages;
@@ -27,11 +26,11 @@ public class PageableResponse<T> extends PageImpl<T> {
                             @JsonProperty("pageable") JsonNode pageable,
                             @JsonProperty("last") boolean last,
                             @JsonProperty("totalPages") int totalPages,
-                            @JsonProperty("sort") @JsonDeserialize(using = CustomSortDeserializer.class) Sort sort,
+                            @JsonProperty("sort") JsonNode sort,
                             @JsonProperty("first") boolean first,
                             @JsonProperty("numberOfElements") int numberOfElements
                             ) {
-        super(content, PageRequest.of(page, size, sort), totalElements);
+        super(content, PageRequest.of(page, size), totalElements);
     }
 
     public PageableResponse(List<T> content, Pageable pageable, long total) {
